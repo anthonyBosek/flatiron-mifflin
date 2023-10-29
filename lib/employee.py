@@ -11,7 +11,13 @@ class Employee:
         return self.manager.name
 
     def tax_bracket(self):
-        pass
+        high_end = self.salary + 1000
+        low_end = self.salary - 1000
+        return [
+            emp
+            for emp in type(self).all
+            if low_end <= emp.salary <= high_end and emp is not self
+        ]
 
     @classmethod
     def paid_over(cls, amt):
@@ -19,4 +25,4 @@ class Employee:
 
     @classmethod
     def find_by_department(cls, dep):
-        return next((emp for emp in cls.all if emp.manager.department == dep))
+        return next((emp for emp in cls.all if emp.manager.department == dep), None)
